@@ -87,6 +87,8 @@ export default class Login extends Component {
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
+            height="200 px"
+            width="200 px"
           />
 
           <Form
