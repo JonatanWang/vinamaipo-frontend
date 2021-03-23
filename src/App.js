@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
 import AuthService from "./services/auth.service";
-
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardUser from "./components/board.user.component";
-import BoardContact from "./components/board.contact.component";
-import BoardAddress from "./components/board.address.component";
+import Login from "./components/login";
+import Register from "./components/register";
+import Home from "./components/home";
+import Profile from "./components/profile";
+import BoardUser from "./components/board.user";
+import BoardContact from "./components/board.contact";
+import BoardAddress from "./components/board.address";
 
 class App extends Component {
   constructor(props) {

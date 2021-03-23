@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "_id": "user-1",
+      "login": "alexander",
+      "roles": ["USER_ADMIN"]
+    },
+    {
+      "_id": "user-2",
+      "login": "zhengyu",
+      "roles": ["USER_ADMIN"]
+    },
+    {
+      "_id": "user-3",
+      "login": "cygni"
+    }
+  ],
+  "contacts": [
+    {
+      "_id": "contact-1",
+      "userId": "user-1",
+      "name": "Zhengyu"
+    }
+  ],
+  "addresses": [
+    {
+      "_id": "address-1",
+      "contactId": "contact-1",
+      "street": "Ekhärds-....",
+      "label": "Hem"
+    }
+  ]
+}

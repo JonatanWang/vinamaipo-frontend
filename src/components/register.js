@@ -3,7 +3,6 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-
 import AuthService from "../services/auth.service";
 
 const required = (value) => {
@@ -36,6 +35,16 @@ const vusername = (value) => {
   }
 };
 
+const vfullname = (value) => {
+  if (value.length > 50) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The full name must be less than 50 characters.
+      </div>
+    );
+  }
+};
+
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
@@ -51,15 +60,19 @@ export default class Register extends Component {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeFullname = this.onChangeFullname.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeRePassword = this.onChangeRePassword.bind(this);
+    this.OnAuthorities = this.OnAuthorities.bind(this);
 
     this.state = {
       username: "",
       email: "",
+      fullname: "",
       password: "",
       rePassword: "",
+      authorities: {},
       successful: false,
       message: "",
     };
@@ -68,6 +81,12 @@ export default class Register extends Component {
   onChangeUsername(e) {
     this.setState({
       username: e.target.value,
+    });
+  }
+
+  onChangeFullname(e) {
+    this.setState({
+      fullname: e.target.value,
     });
   }
 
@@ -85,8 +104,15 @@ export default class Register extends Component {
 
   onChangeRePassword(e) {
     this.setState({
-      password: e.target.value,
+      rePassword: e.target.value,
     });
+  }
+
+  OnAuthorities(e) {
+    let values = Array.from(e.target.selectedOptions, (option) => option.value);
+    console.log(values);
+    this.setState({ authorities: values });
+    console.log(this.state.authorities);
   }
 
   handleRegister(e) {
@@ -103,7 +129,10 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.rePassword,
+        this.state.fullname,
+        this.state.authorities
       ).then(
         (response) => {
           this.setState({
@@ -133,8 +162,8 @@ export default class Register extends Component {
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
+            src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-and-shapes-7/177800/309-512.png"
+            alt="register-avatar"
             className="profile-img-card"
             height="200 px"
             width="200 px"
@@ -161,6 +190,18 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
+                  <label htmlFor="fullname">Full Name</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="fullname"
+                    value={this.state.fullname}
+                    onChange={this.onChangeFullname}
+                    validations={[required, vfullname]}
+                  />
+                </div>
+
+                <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <Input
                     type="text"
@@ -182,6 +223,34 @@ export default class Register extends Component {
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
                   />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="rePassword">Re enter password</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="rePassword"
+                    value={this.state.repassword}
+                    onChange={this.onChangeRePassword}
+                    validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="authorities">Set authorities</label>
+                  <select
+                    name="authorities"
+                    className="form-control"
+                    id="authorities"
+                    value={this.state.authorities}
+                    onChange={this.OnAuthorities}
+                    multiple
+                  >
+                    <option value="USER_ADMIN">User Admin</option>
+                    <option value="CONTACT_ADMIN">Contact Admin</option>
+                    <option value="ADDRESS_ADMIN">Address Admin</option>
+                  </select>
                 </div>
 
                 <div className="form-group">
