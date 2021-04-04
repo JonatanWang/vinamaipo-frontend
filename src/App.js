@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { Switch, Route, Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import "./App.css";
 
 // import AuthService from "./services/auth.service";
 
-import { Home, Contacts } from "./components";
+import { Home, Login, Contacts } from "./components";
 
 function App() {
   return (
@@ -23,6 +23,11 @@ function App() {
               Contacts
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to={"/login"} className="nav-link">
+              Login
+            </Link>
+          </li>
         </div>
       </nav>
 
@@ -30,6 +35,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/contacts" component={Contacts} />
+          <Route path="/login" component={Login} />
         </Switch>
       </div>
     </div>

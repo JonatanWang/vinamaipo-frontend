@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 // import UserService from "../services/user.service";
 
 function Contacts(props) {
-  // const [content, setContent] = useState("")
-
   return (
     <div className="Contacts">
       <ul>
