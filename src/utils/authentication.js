@@ -26,7 +26,10 @@ async function loginAsync(username, password) {
 
   if (response.headers.authorization) {
     localStorage.setItem("user", JSON.stringify(response.data));
-    localStorage.setItem("userToken", response.headers.authorization);
+    localStorage.setItem(
+      "userToken",
+      JSON.stringify(response.headers.authorization)
+    );
   }
 }
 
@@ -67,7 +70,7 @@ async function registerAsync(
 }
 
 async function getAllUsersAsync() {
-  const response = await axios.get(API_URL + "/admin/user/all");
+  const response = await axios.get(API_URL + "/user/all");
   return response;
 }
 
@@ -79,7 +82,7 @@ function authHeader() {
   const accessToken = JSON.parse(localStorage.getItem("userToken"));
 
   if (accessToken) {
-    return { Authorization: "Bearer " + accessToken }; // for Spring Boot back-end
+    return { Authorization: "Bearer " + accessToken }; // for Spring Boot back-end, can be found at Swagger page after logging-in
     // return { 'x-access-token': user.accessToken };       // for Node.js Express back-end
   } else {
     return {};
