@@ -47,8 +47,8 @@ function Contacts(props) {
     contacts.data.items.forEach((element, index) => {
       contactNames.push(
         <li key={index} className="jumbotron">
-          {++index} : <b>{element.name}</b>, created by{" "}
-          {element.creator.fullname} at {element.createdAt}
+          <b>{element.name}</b>, created by {element.creator.fullname} at{" "}
+          {element.createdAt}
         </li>
       );
     });
