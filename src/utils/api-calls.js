@@ -4,9 +4,9 @@ import { getCurrentUser } from "./authentication";
 
 export {
   getPublicContent,
-  getAllUsersAsync as getUserBoard,
-  getContactsAsync as getContactBoard,
-  getAllAddressesAsync as getAddressBoard,
+  getAllUsersAsync as getAllUsersAsync,
+  getContactsAsync as getContactsAsync,
+  getAllAddressesAsync as getAllAddressesAsync,
 };
 
 const API_URL = "http://localhost:3000/api/v1/";

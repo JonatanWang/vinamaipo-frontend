@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router";
 import { getCurrentUser } from "../utils/authentication";
-import { getContactBoard } from "../utils/api-calls";
+import { getContactsAsync } from "../utils/api-calls";
 import { Navigation } from "../components";
 
 function Contacts(props) {
@@ -13,7 +13,7 @@ function Contacts(props) {
   useEffect(() => {
     async function fetchContacts() {
       try {
-        let response = await getContactBoard();
+        let response = await getContactsAsync();
         setContacts(response);
       } catch (error) {
         console.log(error);
@@ -31,20 +31,35 @@ function Contacts(props) {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if (!contacts) {
-    return <div>Error fetching data...</div>;
+  if (!contacts || contacts.data.items.length === 0) {
+    return (
+      <div className="Contacts">
+        <Navigation />
+        <div className="container mt-3">
+          <h1 className="alert alert-danger">No contact found!</h1>
+        </div>
+      </div>
+    );
   }
 
   const contactNames = [];
   if (contacts.data && Array.isArray(contacts.data.items)) {
     contacts.data.items.forEach((element, index) => {
-      contactNames.push(<li key={index}>{element.name}</li>);
+      contactNames.push(
+        <li key={index} className="jumbotron">
+          {++index} : <b>{element.name}</b>, created by{" "}
+          {element.creator.fullname} at {element.createdAt}
+        </li>
+      );
     });
   }
   return (
     <div className="Contacts">
       <Navigation />
       <div className="container mt-3">
+        <h1 className="alert alert-success">
+          You have {contacts.data.items.length} contacts!
+        </h1>
         <ul className="list-group list-group-flush">{contactNames}</ul>
       </div>
     </div>

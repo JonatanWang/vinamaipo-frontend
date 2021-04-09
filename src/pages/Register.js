@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { registerAsync } from "../utils/authentication";
+import { Navigation } from "../components";
 
 const required = (value) => {
   if (!value) {
@@ -159,7 +160,8 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
+      <div className="Register">
+        <Navigation />
         <div className="card card-container">
           <img
             src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-and-shapes-7/177800/309-512.png"

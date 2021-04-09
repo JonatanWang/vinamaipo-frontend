@@ -17,22 +17,24 @@ function Profile(props) {
       <Navigation />
       <div className="container mt-3">
         <div>
-          <header className="jumbotron">
+          <header className="alert alert-success">
             <h3>
-              <strong>{currentUser.username}</strong> Profile
+              <strong>{currentUser.username}</strong>'s Profile
             </h3>
           </header>
 
-          <p>
-            <strong>Full Name: </strong>
-            {currentUser.fullname}
-          </p>
-          <p>
-            <strong>Id:</strong> {currentUser.id}
-          </p>
-          <p>
-            <strong>Email:</strong> {currentUser.email}
-          </p>
+          <div className="jumbotron">
+            <p>
+              <strong>Full Name: </strong>
+              {currentUser.fullname}
+            </p>
+            <p>
+              <strong>Id:</strong> {currentUser.id}
+            </p>
+            <p>
+              <strong>Email:</strong> {currentUser.email}
+            </p>
+          </div>
         </div>
       </div>
     </div>
