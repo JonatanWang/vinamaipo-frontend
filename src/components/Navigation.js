@@ -15,6 +15,7 @@ function Navigation(props) {
     navItemList.push({ url: "/logout", caption: "Logout" });
   } else {
     navItemList.push({ url: "/login", caption: "Login" });
+    navItemList.push({ url: "/register", caption: "Register" });
   }
 
   const navItems = navItemList.map((item) => (

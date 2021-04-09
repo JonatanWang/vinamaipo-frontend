@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import AuthService from "../services/auth.service";
+import { registerAsync } from "../utils/authentication";
 
 const required = (value) => {
   if (!value) {
@@ -126,7 +126,7 @@ export default class Register extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
+      registerAsync(
         this.state.username,
         this.state.email,
         this.state.password,
@@ -226,7 +226,7 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="rePassword">Re enter password</label>
+                  <label htmlFor="rePassword">Re-enter Password</label>
                   <Input
                     type="password"
                     className="form-control"
@@ -247,9 +247,8 @@ export default class Register extends Component {
                     onChange={this.OnAuthorities}
                     multiple
                   >
-                    <option value="USER_ADMIN">User Admin</option>
-                    <option value="CONTACT_ADMIN">Contact Admin</option>
-                    <option value="ADDRESS_ADMIN">Address Admin</option>
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
                   </select>
                 </div>
 

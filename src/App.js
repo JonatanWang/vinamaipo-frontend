@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import { Home, Login, Contacts, Profile, Logout } from "./pages";
+import { Home, Login, Contacts, Profile, Logout, Register } from "./pages";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
       <Route path="/profile" component={Profile} />
       <Route path="/contacts" component={Contacts} />
       <Route path="/logout" component={Logout} />
+      <Route path="/register" component={Register} />
     </Switch>
   );
 }
