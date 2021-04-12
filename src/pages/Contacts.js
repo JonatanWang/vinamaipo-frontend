@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router";
 import { getCurrentUser } from "../utils/authentication";
 import { getContactsAsync } from "../utils/api-calls";
+import { getContactAddressAsync } from "../utils/api-calls";
 import { Navigation } from "../components";
 
 function Contacts(props) {
@@ -14,14 +15,13 @@ function Contacts(props) {
     async function fetchContacts() {
       try {
         let response = await getContactsAsync();
-        setContacts(response);
+        setContacts(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-
     fetchContacts();
-    setIsLoading(false);
   }, []);
 
   if (!currentUser) {
@@ -31,7 +31,8 @@ function Contacts(props) {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if (!contacts || contacts.data.items.length === 0) {
+
+  if (!contacts || contacts.items.length === 0) {
     return (
       <div className="Contacts">
         <Navigation />
@@ -43,27 +44,69 @@ function Contacts(props) {
   }
 
   const contactNames = [];
-  if (contacts.data && Array.isArray(contacts.data.items)) {
-    contacts.data.items.forEach((element, index) => {
+  if (contacts && Array.isArray(contacts.items)) {
+    contacts.items.forEach((element, index) => {
       contactNames.push(
-        <li key={index} className="jumbotron">
-          <b>{element.name}</b>, created by {element.creator.fullname} at{" "}
-          {element.createdAt}
+        <li key={index}>
+          <ContactsItem contactData={element} />
         </li>
       );
     });
   }
+
   return (
     <div className="Contacts">
       <Navigation />
       <div className="container mt-3">
         <h1 className="alert alert-success">
-          You have {contacts.data.items.length} contacts!
+          You have {contacts.items.length} contacts!
         </h1>
         <ul className="list-group list-group-flush">{contactNames}</ul>
       </div>
     </div>
   );
+}
+
+function ContactsItem(props) {
+  // const contactData = props.contactData;
+  const { contactData } = props;
+
+  const [addressData, setAddressData] = useState(null);
+
+  useEffect(() => {
+    async function fetchAddresses() {
+      try {
+        const contactId = contactData.id;
+        const response = await getContactAddressAsync(contactId);
+        setAddressData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAddresses();
+  }, [contactData]);
+
+  if (!contactData || typeof contactData !== "object") {
+    return null;
+  }
+
+  return (
+    <div className="ContactsItem jumbotron">
+      <b>{contactData.name}</b>, created by {contactData.creator.fullname} at{" "}
+      {contactData.createdAt}
+      <ContactsAddressItem addressData={addressData} />
+    </div>
+  );
+}
+
+function ContactsAddressItem(props) {
+  const { addressData } = props;
+
+  if (!addressData) {
+    return <div>NO address found</div>;
+  }
+
+  return <div className="ContactsAddressItem">{addressData.street}</div>;
 }
 
 export default Contacts;

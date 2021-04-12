@@ -6,7 +6,7 @@ export {
   getPublicContent,
   getAllUsersAsync,
   getContactsAsync,
-  getAllAddressesAsync,
+  getContactAddressAsync,
 };
 
 const API_URL = "http://localhost:3000/api/v1/";
@@ -34,6 +34,10 @@ async function getContactsAsync() {
   return response;
 }
 
-async function getAllAddressesAsync() {
-  return await axios.get(API_URL + "/address/all", { headers: authHeader() });
+async function getContactAddressAsync(contactId) {
+  return await axios.get(API_URL + "contact/" + contactId + "/address", {
+    headers: authHeader(),
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  });
 }
